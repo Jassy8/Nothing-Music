@@ -25,7 +25,6 @@
 
 <div align="center">
 
-<img src="Banner.png" alt="Nothing Music banner" width="100%" />
 
 <h1><a id="design"></a>Nothing OS Aesthetic</h1>
 
