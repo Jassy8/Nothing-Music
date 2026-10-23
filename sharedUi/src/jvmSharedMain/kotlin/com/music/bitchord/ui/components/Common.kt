@@ -680,7 +680,7 @@ fun Modifier.hangIntoGutter(outset: Dp): Modifier = layout { measurable, constra
 }
 
 /** The accent a current song's title takes in lists that mark it with [SearchPlayingBars]. */
-val PlayingAccent = Color(0xFFFB4A62)
+val PlayingAccent = Color(0xFFD71921)
 
 @Composable
 fun SearchPlayingBars(modifier: Modifier = Modifier) {
@@ -706,8 +706,9 @@ fun SearchPlayingBars(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .size(24.dp)
-            .clip(RoundedCornerShape(6.dp))
-            .background(Color.Black.copy(alpha = 0.52f)),
+            .clip(RoundedCornerShape(4.dp))
+            .background(Color.Black.copy(alpha = 0.85f))
+            .border(0.5.dp, Color(0x33FFFFFF), RoundedCornerShape(4.dp)),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -720,8 +721,8 @@ fun SearchPlayingBars(modifier: Modifier = Modifier) {
                     Modifier
                         .width(3.dp)
                         .height(14.dp * height)
-                        .clip(RoundedCornerShape(2.dp))
-                        .background(Color.White),
+                        .clip(RoundedCornerShape(1.dp))
+                        .background(Color(0xFFD71921)),
                 )
             }
         }

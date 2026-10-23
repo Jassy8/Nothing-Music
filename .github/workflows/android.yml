@@ -3,10 +3,14 @@ name: Android Release APK
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build-prod-release:
+  build-and-release:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,21 +44,60 @@ jobs:
 
     - name: Build Android APK
       run: |
+        mkdir -p release-apks
         if [ -f keystore.properties ]; then
           ./gradlew assembleProdRelease
+          find app/build/outputs/apk/prod/release -name "*.apk" -exec cp {} release-apks/ \;
         else
           ./gradlew assembleDevDebug
+          find app/build/outputs/apk/dev/debug -name "*.apk" -exec cp {} release-apks/ \;
         fi
+
+        cd release-apks
+        for f in *.apk; do
+          if [[ "$f" == *"universal"* ]]; then
+            cp "$f" "Nothing-Music-v1.0.0-universal.apk"
+          elif [[ "$f" == *"arm64-v8a"* ]]; then
+            cp "$f" "Nothing-Music-v1.0.0-arm64-v8a.apk"
+          elif [[ "$f" == *"armeabi-v7a"* ]]; then
+            cp "$f" "Nothing-Music-v1.0.0-armeabi-v7a.apk"
+          fi
+        done
+        ls -la
+        cd ..
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: nothing-music-apk
-        path: app/build/outputs/apk/**/*.apk
+        path: release-apks/*.apk
 
-    - name: Upload Wear OS APK Artifact
-      if: always()
-      uses: actions/upload-artifact@v4
+    - name: Publish V1 GitHub Release
+      uses: softprops/action-gh-release@v2
       with:
-        name: nothing-music-wear-apk
-        path: wearos/build/outputs/apk/**/*.apk
+        tag_name: v1.0.0
+        name: "Nothing Music v1.0.0 — Initial Release"
+        draft: false
+        prerelease: false
+        body: |
+          # ( NOTHING ) MUSIC v1.0.0
+
+          Welcome to the official **V1 Release** of **Nothing Music**, completely reimagined with the authentic **Nothing OS** design language.
+
+          ### ✨ What's New in V1
+          - **Pure OLED Black `#000000`**: True dark mode for maximum contrast and battery conservation.
+          - **Nothing Red `#D71921` Accent**: Precision mechanical glyph indicators, glowing transport dots, and red equalizer bars.
+          - **Monospace & Dot-Matrix Typography**: Technical uppercase styling with wide tracking (`// NOTHING OS // AUDIO`, `// EXPLORE //`, `// LIBRARY //`).
+          - **Industrial Hardware Player**: Sharp mechanical sliders, tape-deck cassette player aesthetic, and glyph action controls.
+          - **Nothing OS Bottom Bar**: Translucent dark navigation bar with Nothing Red active glyph dot `( • )`.
+          - **Full Rebranding**: Completely overhauled launcher icons, adaptive vector drawables, notification silhouettes, and metadata.
+
+          ### 📲 Installation
+          - **Universal**: [`Nothing-Music-v1.0.0-universal.apk`](https://github.com/Jassy8/Nothing-Music/releases/download/v1.0.0/Nothing-Music-v1.0.0-universal.apk) — *Recommended for all Android devices*
+          - **ARM64**: [`Nothing-Music-v1.0.0-arm64-v8a.apk`](https://github.com/Jassy8/Nothing-Music/releases/download/v1.0.0/Nothing-Music-v1.0.0-arm64-v8a.apk) — *Optimized for 64-bit phones*
+        files: |
+          release-apks/Nothing-Music-v1.0.0-universal.apk
+          release-apks/Nothing-Music-v1.0.0-arm64-v8a.apk
+          release-apks/*.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -468,24 +468,31 @@ internal fun TransportRow(
             haptic = Haptic.SkipPrevious,
         )
         if (isLoading) {
-            // Same footprint as the play/pause target — a smaller box here
-            // would shunt everything below it on every load.
             Box(Modifier.size(playTouch), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(
-                    color = Color.White,
+                    color = Color(0xFFD71921),
                     strokeWidth = 3.dp,
                     modifier = Modifier.size(if (compact) 30.dp else 38.dp),
                 )
             }
         } else {
-            TransportGlyph(
-                icon = if (isPlaying) Res.drawable.ic_player_pause else Res.drawable.ic_player_play,
-                contentDescription = stringResource(if (isPlaying) Res.string.pause else Res.string.play),
-                size = playSize,
-                touchSize = playTouch,
-                onClick = onPlayPause,
-                haptic = if (isPlaying) Haptic.Pause else Haptic.Resume,
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(playTouch)
+                    .clip(CircleShape)
+                    .background(Color(0xFF141414))
+                    .border(1.dp, Color(0xFF2C2C2C), CircleShape),
+            ) {
+                TransportGlyph(
+                    icon = if (isPlaying) Res.drawable.ic_player_pause else Res.drawable.ic_player_play,
+                    contentDescription = stringResource(if (isPlaying) Res.string.pause else Res.string.play),
+                    size = playSize,
+                    touchSize = playTouch,
+                    onClick = onPlayPause,
+                    haptic = if (isPlaying) Haptic.Pause else Haptic.Resume,
+                )
+            }
         }
         TransportGlyph(
             icon = Res.drawable.ic_player_next,
@@ -712,15 +719,13 @@ internal fun CircleGlyph(
     haptic: Haptic = Haptic.Tap,
 ) {
     val haptics = rememberHaptics()
-    val discAlpha by animateFloatAsState(
-        targetValue = if (active) 0.34f else 0.18f,
-        label = "glyphDisc",
-    )
+    val glyphShape = RoundedCornerShape(6.dp)
     Box(
         modifier = Modifier
             .size(34.dp)
-            .clip(CircleShape)
-            .background(LocalPlayerTint.current.copy(alpha = discAlpha))
+            .clip(glyphShape)
+            .background(if (active) Color(0xFFD71921) else Color(0xFF181818))
+            .border(1.dp, if (active) Color(0xFFD71921) else Color(0xFF2C2C2C), glyphShape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
@@ -849,11 +854,13 @@ private fun Pill(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
+    val pillShape = RoundedCornerShape(8.dp)
     Row(
         modifier = modifier
             .height(BOTTOM_ACTION_SIZE)
-            .clip(CircleShape)
-            .background(LocalPlayerTint.current.copy(alpha = 0.12f))
+            .clip(pillShape)
+            .background(Color(0xFF141414))
+            .border(1.dp, Color(0xFF2C2C2C), pillShape)
             .animateContentSize(
                 animationSpec = spring(
                     dampingRatio = 0.82f,

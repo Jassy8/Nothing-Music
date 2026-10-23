@@ -3,6 +3,7 @@ package com.music.bitchord.ui.components
 import com.music.bitchord.sharedui.resources.*
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -65,23 +67,16 @@ fun SearchField(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            // Fixed height prevents the row from growing when text is entered
             .height(46.dp)
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(11.dp))
-            // Asymmetric: the magnifier is a button now and wants a real touch
-            // target, so it's given the room by pulling the field's own start
-            // padding in rather than by pushing the glyph and the text along.
+            .background(Color(0xFF0D0D0D), RoundedCornerShape(8.dp))
+            .border(1.dp, Color(0xFF262626), RoundedCornerShape(8.dp))
             .padding(start = 8.dp, end = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // The search button. It reads as one — a magnifier at the head of a
-        // text field is the search affordance on every platform — and now that
-        // pressing it is the only thing that runs a search, leaving it
-        // decorative would mean the keyboard's own key was the single way in.
         Icon(
             Icons.Rounded.Search,
             contentDescription = stringResource(Res.string.search),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = if (query.isNotBlank()) Color(0xFFD71921) else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier
                 .size(32.dp)
                 .clip(CircleShape)

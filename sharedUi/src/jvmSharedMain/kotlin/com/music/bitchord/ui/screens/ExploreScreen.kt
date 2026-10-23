@@ -3,6 +3,7 @@ package com.music.bitchord.ui.screens
 import com.music.bitchord.sharedui.resources.*
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.unit.sp
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -85,11 +87,11 @@ fun ExploreScreen(
                 if (showTitle) {
                     item {
                         Text(
-                            text = stringResource(Res.string.explore),
-                            style = MaterialTheme.typography.displayLarge,
+                            text = "// EXPLORE //",
+                            style = MaterialTheme.typography.displayLarge.copy(
+                                letterSpacing = 0.8.sp,
+                            ),
                             color = MaterialTheme.colorScheme.onBackground,
-                            // 14dp under the title, the same gap Library leaves
-                            // above its first card (8dp title + 6dp Replay row).
                             modifier = Modifier.padding(
                                 start = PAGE_GUTTER,
                                 end = PAGE_GUTTER,
@@ -155,6 +157,7 @@ private fun MoodGenreCard(
         modifier = modifier
             .aspectRatio(MOOD_CARD_ASPECT)
             .clip(MOOD_CARD_SHAPE)
+            .border(1.dp, Color(0x2EFFFFFF), MOOD_CARD_SHAPE)
             .clickable(onClick = onClick),
     )
 }
@@ -265,7 +268,7 @@ private fun fallbackMoodColor(title: String): Color = when ((title.hashCode() an
 /** Gap between mood cards, in both directions. */
 private val MOOD_SPACING = 12.dp
 
-private val MOOD_CARD_SHAPE = RoundedCornerShape(18.dp)
+private val MOOD_CARD_SHAPE = RoundedCornerShape(8.dp)
 
 /** Width over height; a two-column phone row lands at about 100dp tall. */
 const val MOOD_CARD_ASPECT = 1.72f

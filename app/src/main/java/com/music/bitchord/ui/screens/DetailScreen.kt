@@ -1543,19 +1543,21 @@ private fun ActionPill(
     // Resume rather than a flat tap: both start a queue, and the rising pair
     // says so.
     val haptics = rememberHaptics()
-    val content = if (filled) Color.Black else MaterialTheme.colorScheme.onSurface
+    val pillShape = RoundedCornerShape(8.dp)
+    val content = if (filled) Color.White else MaterialTheme.colorScheme.onSurface
     Row(
         modifier = modifier
             .height(size)
-            .clip(CircleShape)
+            .clip(pillShape)
             .then(
                 if (filled) {
-                    Modifier.background(Color.White)
+                    Modifier
+                        .background(Color(0xFFD71921), pillShape)
+                        .border(1.dp, Color(0xFFD71921), pillShape)
                 } else {
                     Modifier
-                        .background(Color.White.copy(alpha = LIGHT_FILL_ALPHA), CircleShape)
-                        .liquidGlassRim(CircleShape)
-                        .border(1.dp, Color.White.copy(alpha = TOP_RELEASE_EDGE_ALPHA), CircleShape)
+                        .background(Color(0xFF141414), pillShape)
+                        .border(1.dp, Color(0xFF2C2C2C), pillShape)
                 },
             )
             .clickable {
@@ -1574,8 +1576,10 @@ private fun ActionPill(
         )
         Spacer(Modifier.width(8.dp))
         Text(
-            text = label,
-            style = MaterialTheme.typography.titleMedium,
+            text = label.uppercase(),
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontWeight = FontWeight.Bold,
+            ),
             color = content,
             maxLines = 1,
         )
@@ -1607,7 +1611,7 @@ private fun PlayCircle(
             // not whatever the page has behind.
             .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }
             .drawWithContent {
-                drawCircle(containerColor)
+                drawCircle(Color(0xFFD71921))
                 val box = this.size.minDimension * iconScale
                 val unit = box / 24f
                 val origin = Offset((this.size.width - box) / 2f, (this.size.height - box) / 2f)

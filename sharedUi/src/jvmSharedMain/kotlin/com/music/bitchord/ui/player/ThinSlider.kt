@@ -96,8 +96,8 @@ fun ThinSlider(
     transitionWindow: ClosedFloatingPointRange<Float>? = null,
     idleHeight: Dp = 7.dp,
     activeHeight: Dp = 12.dp,
-    activeColor: Color = Color.White.copy(alpha = 0.92f),
-    inactiveColor: Color = Color.White.copy(alpha = 0.26f),
+    activeColor: Color = Color(0xFFD71921),
+    inactiveColor: Color = Color(0xFF262626),
     /** Halfway between the two track colours: visible against unplayed, invisible under played. */
     markerColor: Color = Color.White.copy(alpha = 0.5f),
 ) {
@@ -176,7 +176,7 @@ fun ThinSlider(
                 .fillMaxWidth()
                 .height(height),
         ) {
-            val radius = CornerRadius(size.height / 2f)
+            val radius = CornerRadius(2.5f * density)
             drawRoundRect(color = inactiveColor, cornerRadius = radius)
             // Between the two track colours, and drawn *under* the played fill:
             // once the playhead reaches the window the transition is no longer

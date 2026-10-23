@@ -361,7 +361,7 @@ fun MiniPlayer(
 ) {
     val reduceDynamicBlur by AppSettings.reduceDynamicBlur.collectAsStateWithLifecycle()
     val haptics = rememberHaptics()
-    val shape = RoundedCornerShape(10.dp)
+    val shape = RoundedCornerShape(8.dp)
     Box(
         modifier = modifier
             .padding(horizontal = BAR_GUTTER)
@@ -380,20 +380,8 @@ fun MiniPlayer(
                 onBlocked = onBlockedControl,
             )
             .clip(shape)
-            .then(
-                if (reduceDynamicBlur) {
-                    Modifier.background(MaterialTheme.colorScheme.surface)
-                } else {
-                    Modifier.optimizedHazeEffect(
-                        state = hazeState,
-                        style = HazeMaterials.thin(MaterialTheme.colorScheme.surface),
-                    )
-                },
-            )
-            .border(0.5.dp, Color.White.copy(alpha = 0.10f), shape)
-            // Deliberately silent: the whole bar is the target, so it catches
-            // stray taps meant for the page behind it, and the sheet rising is
-            // its own confirmation. The glyphs on it still buzz.
+            .background(Color(0xFF0C0C0C), shape)
+            .border(1.dp, Color(0xFF262626), shape)
             .clickable(onClick = onExpand),
     ) {
         Row(
@@ -410,18 +398,29 @@ fun MiniPlayer(
                 contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
-                    .playerDockArt(dock, ART_CORNER)
-                    .clip(RoundedCornerShape(ART_CORNER))
-                    .thumbnailBorder(RoundedCornerShape(ART_CORNER))
+                    .playerDockArt(dock, 4.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .border(0.5.dp, Color(0x33FFFFFF), RoundedCornerShape(4.dp))
                     .background(MaterialTheme.colorScheme.surfaceVariant),
             )
             Spacer(Modifier.width(10.dp))
             Column(Modifier.weight(1f)) {
-                ExplicitSongTitle(
-                    song = song,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (isPlaying) {
+                        Box(
+                            Modifier
+                                .padding(end = 6.dp)
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(Color(0xFFD71921)),
+                        )
+                    }
+                    ExplicitSongTitle(
+                        song = song,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
                 Text(
                     text = song.artist,
                     style = MaterialTheme.typography.bodyMedium,
@@ -433,7 +432,7 @@ fun MiniPlayer(
             if (isLoading) {
                 Box(Modifier.size(GLYPH_SLOT), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = Color(0xFFD71921),
                         strokeWidth = 2.dp,
                         modifier = Modifier.size(SPINNER_SIZE),
                     )
@@ -449,7 +448,7 @@ fun MiniPlayer(
                     Icon(
                         imageVector = if (isPlaying) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
                         contentDescription = stringResource(if (isPlaying) R.string.pause else R.string.play),
-                        tint = MaterialTheme.colorScheme.onBackground,
+                        tint = if (isPlaying) Color(0xFFD71921) else MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.size(GLYPH_SIZE),
                     )
                 }

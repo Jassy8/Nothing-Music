@@ -47,9 +47,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.music.bitchord.data.settings.AppSettings
 import com.music.bitchord.ui.haptics.Haptic
@@ -218,19 +220,8 @@ fun FloatingBottomBar(
             .padding(bottom = 2.dp)
             .fillMaxWidth()
             .clip(pillShape)
-            .then(
-                if (reduceDynamicBlur) {
-                    Modifier.background(container)
-                } else if (useGlass) {
-                    Modifier.liquidGlass(shape = pillShape)
-                } else {
-                    Modifier.optimizedHazeEffect(
-                        state = hazeState,
-                        style = HazeMaterials.regular(container),
-                    )
-                },
-            )
-            .border(GLASS_EDGE_WIDTH, GLASS_EDGE_COLOR, pillShape)
+            .background(Color(0xFF0A0A0A))
+            .border(1.dp, Color(0xFF242424), pillShape)
             .padding(horizontal = PILL_INSET, vertical = PILL_INSET),
     ) {
         if (tabWidthPx > 0f) {
@@ -240,16 +231,12 @@ fun FloatingBottomBar(
                     .height(with(density) { rowSize.height.toDp() })
                     .graphicsLayer {
                         translationX = animatedPillOffset
-                        // Around its own centre, so the indicator draws out
-                        // both ways rather than growing a tail off one edge —
-                        // a leading edge that ran ahead of the glyph it is
-                        // meant to be behind would read as two things moving,
-                        // not one thing stretching.
                         scaleX = 1f + lag * STRETCH
                         scaleY = 1f - lag * STRETCH * SQUASH
                     }
                     .clip(pillShape)
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.14f)),
+                    .background(Color(0xFF181818))
+                    .border(1.dp, Color(0xFF2E2E2E), pillShape),
             )
         }
 
@@ -371,11 +358,24 @@ private fun BottomBarItem(
         )
         Spacer(Modifier.height(TAB_ICON_LABEL_GAP))
         Text(
-            text = tab.label,
-            style = MaterialTheme.typography.labelSmall,
+            text = tab.label.uppercase(),
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontFamily = FontFamily.Monospace,
+                letterSpacing = 0.8.sp,
+            ),
             color = tint,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
+        if (selected) {
+            Box(
+                Modifier
+                    .padding(top = 2.dp)
+                    .size(3.5.dp)
+                    .background(Color(0xFFD71921), RoundedCornerShape(1.dp)),
+            )
+        } else {
+            Spacer(Modifier.height(5.5.dp))
+        }
     }
 }

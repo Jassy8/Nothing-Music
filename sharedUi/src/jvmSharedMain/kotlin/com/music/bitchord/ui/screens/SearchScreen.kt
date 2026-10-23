@@ -11,7 +11,10 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
 import com.music.bitchord.ui.components.longPressMenuClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -1005,12 +1008,14 @@ private fun SearchFilterTabs(filter: SearchFilter, onFilterChange: (SearchFilter
                 modifier = Modifier
                     .clip(FILTER_PILL_SHAPE)
                     .background(
-                        if (selected) MaterialTheme.colorScheme.onBackground
-                        else MaterialTheme.colorScheme.surfaceVariant,
+                        if (selected) Color(0xFFD71921)
+                        else Color(0xFF121212),
                     )
-                    // Only the pill that isn't already selected has anything to
-                    // report — re-tapping the current filter changes nothing, so
-                    // buzzing for it would be feedback for a no-op.
+                    .border(
+                        1.dp,
+                        if (selected) Color(0xFFD71921) else Color(0xFF2C2C2C),
+                        FILTER_PILL_SHAPE,
+                    )
                     .clickable {
                         if (!selected) haptics.play(Haptic.Select)
                         onFilterChange(entry)
@@ -1018,10 +1023,12 @@ private fun SearchFilterTabs(filter: SearchFilter, onFilterChange: (SearchFilter
                     .padding(horizontal = 12.dp, vertical = 6.dp),
             ) {
                 Text(
-                    text = entry.label,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = if (selected) MaterialTheme.colorScheme.background
-                    else MaterialTheme.colorScheme.onBackground,
+                    text = entry.label.uppercase(),
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontFamily = FontFamily.Monospace,
+                        letterSpacing = 0.8.sp,
+                    ),
+                    color = if (selected) Color.White else Color(0xFF888888),
                     maxLines = 1,
                 )
             }
@@ -1030,4 +1037,4 @@ private fun SearchFilterTabs(filter: SearchFilter, onFilterChange: (SearchFilter
 }
 
 /** Rounded, but well short of a capsule — the corner reads as a cut, not a curve. */
-private val FILTER_PILL_SHAPE = RoundedCornerShape(12.dp)
+private val FILTER_PILL_SHAPE = RoundedCornerShape(6.dp)

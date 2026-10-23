@@ -83,7 +83,7 @@ android {
         // Which release assets are this app's: the phone and TV APKs ship in
         // the same GitHub release, told apart by file name. See
         // AppUpdateChecker.apkAssetUrl.
-        buildConfigField("String", "UPDATE_APK_PREFIX", "\"BitChord-\"")
+        buildConfigField("String", "UPDATE_APK_PREFIX", "\"Nothing-Music-\"")
     }
 
     splits {
@@ -116,10 +116,11 @@ android {
         create("dev") {
             dimension = "env"
             applicationId = "com.dev.bitchord"
-            resValue("string", "app_name", "BitChord Dev")
+            resValue("string", "app_name", "Nothing Music")
         }
         create("prod") {
             dimension = "env"
+            resValue("string", "app_name", "Nothing Music")
             // Matches defaultConfig — this is the package already shipped/installed.
         }
     }
