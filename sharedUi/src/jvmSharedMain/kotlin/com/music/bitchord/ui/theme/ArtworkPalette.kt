@@ -118,7 +118,7 @@ fun rememberArtworkPalette(
         background = scheme.background,
         wash = scheme.background,
         elevated = scheme.surfaceVariant,
-        accent = scheme.primary,
+        accent = Color(0xFFD71921),
         onBackground = scheme.onBackground,
         onBackgroundVariant = scheme.onSurfaceVariant,
         divider = scheme.outline,
@@ -364,69 +364,17 @@ internal fun topBandScrimAlpha(artworkLuminance: Float?): Float {
 private const val PLAYER_STATUS_SCRIM_MIN_ALPHA = 0.16f
 private const val PLAYER_STATUS_SCRIM_MAX_ALPHA = 0.65f
 
-private fun Seed.toPalette(dark: Boolean): ArtworkPalette = if (dark) {
-    ArtworkPalette(
-        // Deep enough that white body text clears contrast on any sleeve, but
-        // not so deep the hue is gone — the whole point is that the page is
-        // recognisably *this* record's colour.
-        background = dominant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.20f, maximum = 0.62f) },
-            lightness = { 0.13f },
-        ),
-        // Follows the edge's own brightness within a band that stays clear of
-        // white body text at the top and of [background] at the bottom: a
-        // sleeve that ends dark hands over almost invisibly, one that ends
-        // bright leaves a page that is visibly lit from under the artwork.
-        wash = edge.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.18f, maximum = 0.58f) },
-            lightness = { it.coerceIn(0.14f, 0.24f) },
-        ),
-        elevated = dominant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.20f, maximum = 0.62f) },
-            lightness = { 0.22f },
-        ),
-        accent = vibrant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.55f, maximum = 1f) },
-            lightness = { it.coerceIn(0.62f, 0.78f) },
-        ),
-        onBackground = Color.White,
-        // A pale tint of the page's own hue rather than a translucent white —
-        // Apple Music's secondary lines are the sleeve's colour, lifted, so a
-        // blue record's credits read light blue on its blue page. Bright
-        // enough that it still clears contrast on [background].
-        onBackgroundVariant = dominant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.22f, maximum = 0.50f) },
-            lightness = { 0.80f },
-        ),
-        divider = Color.White.copy(alpha = 0.12f),
-    )
-} else {
-    ArtworkPalette(
-        background = dominant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.14f, maximum = 0.50f) },
-            lightness = { 0.91f },
-        ),
-        wash = edge.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.12f, maximum = 0.46f) },
-            lightness = { it.coerceIn(0.78f, 0.90f) },
-        ),
-        elevated = dominant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.14f, maximum = 0.50f) },
-            lightness = { 0.83f },
-        ),
-        accent = vibrant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.55f, maximum = 1f) },
-            lightness = { it.coerceIn(0.30f, 0.44f) },
-        ),
-        onBackground = Color.Black,
-        // The same hue taken down rather than up, for the pale page.
-        onBackgroundVariant = dominant.withHsl(
-            saturation = { adaptedArtworkSaturation(it, minimum = 0.22f, maximum = 0.55f) },
-            lightness = { 0.34f },
-        ),
-        divider = Color.Black.copy(alpha = 0.10f),
-    )
-}
+private fun Seed.toPalette(dark: Boolean): ArtworkPalette = ArtworkPalette(
+    // Nothing OS: Pure OLED black background, no colored pastel washes
+    background = Color(0xFF000000),
+    wash = Color(0xFF080808),
+    elevated = Color(0xFF141414),
+    // Nothing signature red accent
+    accent = Color(0xFFD71921),
+    onBackground = Color.White,
+    onBackgroundVariant = Color(0xFF888888),
+    divider = Color.White.copy(alpha = 0.12f),
+)
 
 /**
  * Keeps neutral artwork neutral instead of inventing a hue for it.

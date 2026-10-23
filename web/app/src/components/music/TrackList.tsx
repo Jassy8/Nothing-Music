@@ -42,19 +42,18 @@ const dimmed = 'group-data-unavailable/row:opacity-45';
 const link = 'text-inherit hover:underline group-data-current/row:text-primary';
 
 /**
- * A hairline on top of every row, hidden on hover and around the playing row;
- * a fill on hover, a stronger one for the playing row.
+ * Nothing OS track row: sharp borders, red active accent line, monospace numbers.
  */
 const row = [
-  'group/row relative grid items-center bg-transparent hover:bg-tracklist-hover data-unavailable:cursor-default',
-  'data-current:bg-[color-mix(in_srgb,var(--systemPrimary)_12%,transparent)]',
-  'before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:border-t-[0.5px] before:border-t-divider',
+  'group/row relative grid items-center bg-transparent hover:bg-[#ffffff08] data-unavailable:cursor-default transition-colors',
+  'data-current:bg-[#ffffff0a] data-current:border-l-2 data-current:border-l-[#D71921] data-current:ps-[2px]',
+  'before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:border-t-[0.5px] before:border-t-[#ffffff0f]',
   'hover:before:border-t-transparent data-current:before:border-t-transparent [&:hover+&]:before:border-t-transparent [&[data-current]+&]:before:border-t-transparent',
 ].join(' ');
 
 const rowVariant: Record<Variant, string> = {
-  album: 'h-[46px] grid-cols-[minmax(0,1fr)_auto] rounded-row',
-  playlist: `h-[54px] ${playlistColumns} rounded-[12px] max-md:grid-cols-[minmax(0,1fr)_auto]`,
+  album: 'h-[46px] grid-cols-[minmax(0,1fr)_auto] rounded-[2px]',
+  playlist: `h-[54px] ${playlistColumns} rounded-[2px] max-md:grid-cols-[minmax(0,1fr)_auto]`,
 };
 
 function Artists({ artists }: { artists: ArtistRef[] }) {
@@ -182,7 +181,7 @@ function Row({ track, variant, position, fallbackArtwork, onPlayRow }: RowProps)
       )}
       <div className={`${cell} ${time[variant]} ${dimmed}`}>
         {/* The ⋯ button (TrackMenu) takes the time's place on hover, as Apple's rows do. */}
-        <span className={unavailable ? undefined : 'group-focus-within/row:invisible group-hover/row:invisible group-has-[[data-open]]/row:invisible'}>
+        <span className={unavailable ? undefined : 'font-[var(--font-mono)] tabular-nums tracking-[0.04em] text-[12px] group-focus-within/row:invisible group-hover/row:invisible group-has-[[data-open]]/row:invisible'}>
           {unavailable === 'missing' ? 'Not found' : formatDuration(track.durationSec)}
         </span>
         {!unavailable && (
@@ -198,7 +197,7 @@ function Row({ track, variant, position, fallbackArtwork, onPlayRow }: RowProps)
 
 function Header() {
   return (
-    <div className={`grid h-8 items-center ${playlistColumns} type-callout-emphasized text-secondary max-md:hidden`} aria-hidden="true">
+    <div className={`grid h-8 items-center ${playlistColumns} type-[500_10px/14px] uppercase tracking-[0.14em] text-[#ffffff50] max-md:hidden`} aria-hidden="true">
       <div className={`${cell} gap-3 ps-[7px]`}>Song</div>
       <div className={secondary}>Artist</div>
       <div className={tertiary}>Album</div>

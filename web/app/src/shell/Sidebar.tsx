@@ -50,14 +50,14 @@ const LIBRARY: NavItem[] = (Object.keys(LIBRARY_ICONS) as (keyof typeof LIBRARY_
   Icon: LIBRARY_ICONS[section],
 }));
 
-// A sidebar row; NavLink sets aria-current on the page's own row.
+// Nothing OS nav row: monochrome, sharp, mechanical hover.
 const item =
-  'group flex h-9 items-center gap-2 mb-0.5 p-1 rounded-nav type-body-reduced text-primary hover:bg-quinary aria-[current=page]:bg-nav-selected';
-// Apple's glyphs, drawn at 24px (their 24-unit box), which the user preferred to Apple's own 28px.
-const icon = 'inline-grid size-6 flex-none place-items-center text-primary group-aria-[current=page]:text-key';
-const navLabel = 'min-w-0 truncate';
-// "Library", "Playlists" (report §1: 12px/15px 600, secondary, padding 4px 8px).
-const sectionHeader = 'mt-4 px-2 py-1 type-callout-emphasized text-secondary';
+  'group flex h-9 items-center gap-3 mb-0.5 px-2.5 py-1 rounded-[4px] type-body-reduced text-secondary transition-colors duration-100 hover:text-primary hover:bg-[#ffffff08] aria-[current=page]:text-primary aria-[current=page]:bg-[#ffffff0a]';
+// Glyph container — Nothing's dot-matrix icons are stark, white when active, red dot when selected.
+const icon = 'inline-grid size-5 flex-none place-items-center text-[inherit] group-aria-[current=page]:text-primary';
+const navLabel = 'min-w-0 truncate tracking-[0.02em]';
+// Section headers: Nothing OS uppercase, spaced, industrial.
+const sectionHeader = 'mt-5 px-2.5 py-1.5 type-[500_10px/14px] uppercase tracking-[0.12em] text-[#ffffff40]';
 const list = 'flex flex-col';
 
 function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate: () => void }) {
@@ -66,8 +66,10 @@ function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate: () => vo
       {items.map(({ to, label, Icon }) => (
         <li key={to}>
           <PrefetchNavLink to={to} className={item} onClick={onNavigate}>
-            <Icon size={24} className={icon} />
+            <Icon size={20} className={icon} />
             <span className={navLabel}>{label}</span>
+            {/* Nothing OS: red dot indicator for active nav. */}
+            <span className="ml-auto size-1.5 rounded-full bg-nothing-red opacity-0 group-aria-[current=page]:opacity-100 transition-opacity" />
           </PrefetchNavLink>
         </li>
       ))}
@@ -75,7 +77,7 @@ function NavList({ items, onNavigate }: { items: NavItem[]; onNavigate: () => vo
   );
 }
 
-/** Library and Playlists (report §1), once YouTube requests are made as the user. */
+/** Library and Playlists, once YouTube requests are made as the user. */
 function LibraryNav({ onNavigate }: { onNavigate: () => void }) {
   const playlists = useLibraryPlaylists();
   return (
@@ -86,7 +88,7 @@ function LibraryNav({ onNavigate }: { onNavigate: () => void }) {
       <ul className={list}>
         <li>
           <PrefetchNavLink to="/library/playlists" className={item} onClick={onNavigate}>
-            <AllPlaylistsIcon size={24} className={icon} />
+            <AllPlaylistsIcon size={20} className={icon} />
             <span className={navLabel}>{LIBRARY_SECTIONS.playlists.title}</span>
           </PrefetchNavLink>
         </li>
@@ -94,7 +96,7 @@ function LibraryNav({ onNavigate }: { onNavigate: () => void }) {
           <li key={playlist.id}>
             <PrefetchNavLink to={hrefFor(playlist) ?? '/library/playlists'} className={item} onClick={onNavigate}>
               <span className={icon}>
-                <ListMusic size={17} strokeWidth={1.8} />
+                <ListMusic size={15} strokeWidth={1.5} />
               </span>
               <span className={navLabel}>{playlist.title}</span>
             </PrefetchNavLink>
@@ -105,7 +107,7 @@ function LibraryNav({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-/** Spotify's playlists, once the extension can read them as the user (prompt §7.1). */
+/** Spotify's playlists, once the extension can read them as the user. */
 function SpotifyNav({ onNavigate }: { onNavigate: () => void }) {
   const playlists = useSpotifyPlaylists();
   return (
@@ -114,7 +116,7 @@ function SpotifyNav({ onNavigate }: { onNavigate: () => void }) {
       <ul className={list}>
         <li>
           <PrefetchNavLink to="/spotify" end className={item} onClick={onNavigate}>
-            <AllPlaylistsIcon size={24} className={icon} />
+            <AllPlaylistsIcon size={20} className={icon} />
             <span className={navLabel}>All Spotify Playlists</span>
           </PrefetchNavLink>
         </li>
@@ -122,7 +124,7 @@ function SpotifyNav({ onNavigate }: { onNavigate: () => void }) {
           <li key={playlist.id}>
             <PrefetchNavLink to={`/spotify/playlist/${encodeURIComponent(playlist.id)}`} className={item} onClick={onNavigate}>
               <span className={icon}>
-                <ListMusic size={17} strokeWidth={1.8} />
+                <ListMusic size={15} strokeWidth={1.5} />
               </span>
               <span className={navLabel}>{playlist.name}</span>
             </PrefetchNavLink>
@@ -133,7 +135,7 @@ function SpotifyNav({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-/** The left glass sidebar (report §1). */
+/** The left sidebar — Nothing OS style: flat black surface, bordered, industrial typography. */
 export function Sidebar() {
   const drawerOpen = useUi((s) => s.drawerOpen);
   const setDrawerOpen = useUi((s) => s.setDrawerOpen);
@@ -146,48 +148,52 @@ export function Sidebar() {
     <>
       {/* Below 484px the sidebar is a drawer opened from the top bar's menu button. */}
       <nav
-        className="absolute inset-y-0 left-0 z-(--z-web-chrome) flex w-(--web-navigation-width) flex-col glass-material max-sm:w-[min(300px,82vw)] max-sm:-translate-x-full max-sm:shadow-glass max-sm:transition-transform max-sm:duration-(--duration-panel) max-sm:ease-panel max-sm:data-[open=true]:translate-none"
+        className="absolute inset-y-0 left-0 z-(--z-web-chrome) flex w-(--web-navigation-width) flex-col bg-[#0a0a0a] border-r border-[#ffffff14] max-sm:w-[min(280px,82vw)] max-sm:-translate-x-full max-sm:shadow-[4px_0_24px_#000000] max-sm:transition-transform max-sm:duration-(--duration-panel) max-sm:ease-panel max-sm:data-[open=true]:translate-none"
         data-open={drawerOpen}
         aria-label="Main"
       >
-        <div className="mt-2 ml-2 flex h-18 items-center px-5">
-          <PrefetchLink to="/home" className="inline-flex items-center gap-2 rounded-[6px]" aria-label="BitChord, Home" onClick={close}>
-            {/* White on dark, as Apple's own wordmark; it follows the label colour so it stays visible in light. */}
-            <LogoMark size={22} className="text-primary" />
-            <span className="type-[700_19px/24px] tracking-[-0.01em]">BitChord</span>
+        {/* Nothing OS branding: wordmark with the red dot. */}
+        <div className="mx-2.5 flex h-16 items-center px-2.5 border-b border-[#ffffff0a]">
+          <PrefetchLink to="/home" className="inline-flex items-center gap-2.5 rounded-[4px]" aria-label="Nothing Music, Home" onClick={close}>
+            {/* Nothing's red dot glyph — the brand mark. */}
+            <span className="relative flex size-5 items-center justify-center">
+              <span className="absolute size-2.5 rounded-full bg-nothing-red animate-dot-pulse" />
+              <span className="size-5 rounded-full border border-[#ffffff20]" />
+            </span>
+            <span className="type-[600_16px/20px] tracking-[0.04em] uppercase text-primary">Nothing</span>
+            <span className="type-[300_16px/20px] tracking-[0.04em] uppercase text-secondary">Music</span>
           </PrefetchLink>
         </div>
-        <div className="min-h-0 flex-1 overflow-y-auto pr-3 pl-5 [scrollbar-width:none]">
+        <div className="min-h-0 flex-1 overflow-y-auto px-2.5 pt-2 [scrollbar-width:thin]">
           <NavList items={PRIMARY} onNavigate={close} />
           {signedIn && <LibraryNav onNavigate={close} />}
           {spotifySignedIn && <SpotifyNav onNavigate={close} />}
         </div>
-        <div className="flex flex-col gap-2 pt-3 pr-3 pb-5 pl-5">
+        <div className="flex flex-col gap-1.5 px-2.5 pt-3 pb-4 border-t border-[#ffffff0a]">
           <PrefetchNavLink to="/extension" className={item} onClick={close}>
-            {/* Chrome's own toolbar glyph for extensions (Material "extension"). */}
             <span className={icon}>
-              <MdOutlineExtension size={18} />
+              <MdOutlineExtension size={16} />
             </span>
-            <span className={navLabel}>BitChord Extension</span>
+            <span className={navLabel}>Extension</span>
             {update.state === 'available' && (
-              <span className="ml-auto rounded-[10px] bg-key px-[7px] py-0.5 type-subhead-emphasized text-white" title={`Version ${update.latest.version} is available`}>
+              <span className="ml-auto rounded-[3px] border border-nothing-red bg-nothing-red-dim px-1.5 py-0.5 type-[500_9px/12px] uppercase tracking-[0.08em] text-nothing-red" title={`Version ${update.latest.version} is available`}>
                 Update
               </span>
             )}
           </PrefetchNavLink>
           <AccountButton />
-          <div className="flex items-center justify-between">
-            <a className="inline-flex items-center gap-1 ps-1 type-callout text-primary hover:underline" href={config.androidAppUrl} target="_blank" rel="noreferrer">
-              <span>Get the Android app</span>
-              <ArrowUpRight size={14} strokeWidth={2} />
+          <div className="flex items-center justify-between mt-1">
+            <a className="inline-flex items-center gap-1 px-1 type-[400_11px/14px] tracking-[0.02em] text-[#ffffff40] transition-colors hover:text-secondary" href={config.androidAppUrl} target="_blank" rel="noreferrer">
+              <span>Android app</span>
+              <ArrowUpRight size={12} strokeWidth={1.5} />
             </a>
-            <PrefetchNavLink to="/settings" className="grid size-7 place-items-center rounded-nav text-secondary hover:bg-quinary hover:text-primary aria-[current=page]:bg-quinary aria-[current=page]:text-primary" aria-label="Settings" title="Settings" onClick={close}>
-              <Settings size={17} strokeWidth={1.9} />
+            <PrefetchNavLink to="/settings" className="grid size-7 place-items-center rounded-[4px] text-[#ffffff40] transition-colors hover:text-primary hover:bg-[#ffffff08] aria-[current=page]:text-primary" aria-label="Settings" title="Settings" onClick={close}>
+              <Settings size={15} strokeWidth={1.5} />
             </PrefetchNavLink>
           </div>
         </div>
       </nav>
-      {drawerOpen && <div className="absolute inset-0 z-[calc(var(--z-web-chrome)-1)] hidden bg-scrim max-sm:block" onClick={close} aria-hidden="true" />}
+      {drawerOpen && <div className="absolute inset-0 z-[calc(var(--z-web-chrome)-1)] hidden bg-[#000000cc] max-sm:block" onClick={close} aria-hidden="true" />}
     </>
   );
 }

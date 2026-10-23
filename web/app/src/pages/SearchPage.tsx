@@ -37,12 +37,12 @@ function shelvesFor(results: SearchResults): Shelf[] {
   ].filter((s): s is Shelf => !!s);
 }
 
-const sectionTitle = 'mx-(--body-gutter) mt-3 type-title-2-emphasized';
-// Top Results: 3 columns, gap 20px; 118px cards with 90px artwork.
+const sectionTitle = 'mx-(--body-gutter) mt-4 type-[500_10px/14px] uppercase tracking-[0.12em] text-[#ffffff40]';
+// Top Results: 3 columns, gap 16px; bordered cards with 90px artwork.
 const topGrid =
-  'mx-(--body-gutter) mt-3 mb-8 grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-[607px]:grid-cols-[minmax(0,1fr)] max-[607px]:gap-1';
+  'mx-(--body-gutter) mt-3 mb-8 grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-[607px]:grid-cols-[minmax(0,1fr)] max-[607px]:gap-1';
 const top =
-  'grid min-h-[118px] grid-cols-[90px_minmax(0,1fr)] items-center gap-x-3.5 rounded-[8px] bg-quinary px-3 py-3.5 text-left hover:bg-quaternary';
+  'grid min-h-[118px] grid-cols-[90px_minmax(0,1fr)] items-center gap-x-3.5 rounded-[6px] border border-[#ffffff14] bg-[#ffffff06] px-3 py-3.5 text-left hover:bg-[#ffffff0a] transition-colors duration-75';
 const topText = 'flex min-w-0 flex-col gap-0.5';
 
 function TopResult({ item }: { item: MusicItem }) {

@@ -179,7 +179,7 @@ export function Lcd() {
 
 // Elapsed and remaining, over the line's two ends while the pointer is on it.
 const time =
-  'pointer-events-none absolute bottom-[11px] type-[600_11px/13px] tabular-nums text-primary opacity-0 transition-opacity group-hover/scrub:opacity-100 group-data-dragging/scrub:opacity-100';
+  'pointer-events-none absolute bottom-[11px] font-[var(--font-mono)] type-[400_10px/13px] tabular-nums tracking-[0.06em] text-[#ffffff60] opacity-0 transition-opacity group-hover/scrub:opacity-100 group-data-dragging/scrub:opacity-100';
 
 /**
  * Elapsed time as a 2px line along the LCD's bottom (report §1). Hovering
@@ -198,10 +198,10 @@ function Progress() {
       <span ref={elapsed} className={`${time} left-0`} />
       <span ref={remaining} className={`${time} right-0`} />
       <div
-        className="absolute inset-x-0 bottom-1.5 h-0.5 overflow-hidden rounded-[1px] bg-quaternary transition-[height,left,right] duration-100 ease-in group-hover/scrub:bottom-[5px] group-hover/scrub:h-1 group-data-dragging/scrub:bottom-[5px] group-data-dragging/scrub:h-1"
+        className="absolute inset-x-0 bottom-1.5 h-[2px] overflow-hidden rounded-[1px] bg-[#ffffff14] transition-[height,left,right] duration-75 ease-in group-hover/scrub:bottom-[5px] group-hover/scrub:h-[3px] group-data-dragging/scrub:bottom-[5px] group-data-dragging/scrub:h-[3px]"
         aria-hidden="true"
       >
-        <div ref={bar} className="size-full origin-left scale-x-(--progress) bg-secondary [--progress:0]" />
+        <div ref={bar} className="size-full origin-left scale-x-(--progress) bg-nothing-red [--progress:0]" />
       </div>
     </div>
   );

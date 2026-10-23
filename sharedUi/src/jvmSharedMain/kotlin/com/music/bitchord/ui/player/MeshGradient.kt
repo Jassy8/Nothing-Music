@@ -49,10 +49,10 @@ import kotlin.math.min
 import kotlin.math.sin
 
 private val FallbackColors = listOf(
-    Color(0xFF3A1C71),
-    Color(0xFFD76D77),
-    Color(0xFF2B5876),
-    Color(0xFFFFAF7B),
+    Color(0xFF000000),
+    Color(0xFF0A0A0A),
+    Color(0xFFD71921),
+    Color(0xFF141414),
 )
 
 /** The four mesh colours, wrapped so the backdrop can skip recomposition. */

@@ -49,16 +49,16 @@ function Scrubber() {
       {/* A taller hit area than the line it carries. */}
       <div className="group/hit flex h-4 cursor-pointer touch-none items-center" {...handlers}>
         <div
-          className="h-1 flex-1 overflow-hidden rounded-[999px] bg-quaternary transition-[height] duration-120 ease-in group-hover/hit:h-2 group-data-dragging/scrub:h-2"
+          className="h-[3px] flex-1 overflow-hidden rounded-[1px] bg-[#ffffff1a] transition-[height] duration-100 ease-in group-hover/hit:h-1.5 group-data-dragging/scrub:h-1.5"
           aria-hidden="true"
         >
           <div
             ref={bar}
-            className="size-full origin-left scale-x-(--progress) bg-secondary transition-[background-color] duration-120 ease-in [--progress:0] group-hover/hit:bg-primary group-data-dragging/scrub:bg-primary"
+            className="size-full origin-left scale-x-(--progress) bg-nothing-red transition-[background-color] duration-100 ease-in [--progress:0] group-hover/hit:bg-nothing-red group-data-dragging/scrub:bg-nothing-red"
           />
         </div>
       </div>
-      <div className="mt-0.5 flex justify-between type-[500_11px/14px] tabular-nums text-tertiary">
+      <div className="mt-1 flex justify-between font-[var(--font-mono)] type-[400_10px/14px] tabular-nums tracking-[0.06em] text-[#ffffff40]">
         <span ref={elapsed} />
         <span ref={remaining} />
       </div>
@@ -67,9 +67,9 @@ function Scrubber() {
 }
 
 const transportButton =
-  'grid place-items-center rounded-full transition-[background-color,scale] duration-100 ease-in enabled:hover:bg-quinary enabled:active:scale-90 disabled:opacity-40';
-// Shuffle and repeat, when on: full white on the mesh, where red would clash.
-const toggle = `${transportButton} size-9 text-tertiary aria-pressed:text-primary`;
+  'grid place-items-center rounded-[4px] transition-[background-color,scale] duration-75 ease-in enabled:hover:bg-[#ffffff08] enabled:active:scale-95 disabled:opacity-30';
+// Nothing OS: muted controls, red when toggled on.
+const toggle = `${transportButton} size-9 text-[#ffffff40] aria-pressed:text-nothing-red`;
 const skip = `${transportButton} size-12 text-primary`;
 
 /** Shuffle, previous, play/pause, next, repeat. No volume: the pill keeps that. */
@@ -89,7 +89,7 @@ function Transport() {
       <button className={skip} disabled={!hasTrack} aria-label="Previous" onClick={previous}>
         <BackwardIcon size={40} />
       </button>
-      <button className={`${transportButton} size-14 text-primary`} disabled={!hasTrack} aria-label={playing ? 'Pause' : 'Play'} onClick={togglePlay}>
+      <button className={`${transportButton} size-14 rounded-full border border-[#ffffff20] text-primary hover:bg-nothing-red hover:border-nothing-red hover:text-black`} disabled={!hasTrack} aria-label={playing ? 'Pause' : 'Play'} onClick={togglePlay}>
         {playing ? <PauseIcon size={48} /> : <PlayIcon size={48} />}
       </button>
       <button className={skip} disabled={!hasTrack || !hasNext} aria-label="Next" onClick={next}>
@@ -108,8 +108,9 @@ function Transport() {
 }
 
 // Close, browser full screen, and the column toggles, in the corners.
+// Nothing OS chrome buttons: sharp, mechanical.
 const chrome =
-  'absolute z-1 grid size-8 place-items-center rounded-full text-secondary transition-[background-color,color] duration-100 ease-in hover:bg-quinary hover:text-primary';
+  'absolute z-1 grid size-8 place-items-center rounded-[4px] text-[#ffffff60] transition-[background-color,color] duration-75 ease-in hover:bg-[#ffffff0a] hover:text-primary';
 const artworkLayer = 'absolute inset-0 size-full rounded-[inherit] object-cover opacity-0 transition-opacity duration-300 ease-in';
 
 /** How long the pointer can rest before a playing music video hides its controls. */

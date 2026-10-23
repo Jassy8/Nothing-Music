@@ -104,14 +104,11 @@ fun glassContentColor(): Color =
     if (MaterialTheme.colorScheme.surface.luminance() > 0.5f) Color.Black else Color.White
 
 /**
- * Selected-tab indicator colour for a glass surface: the inverse of
- * [glassContentColor] rather than the same tint at lower alpha — white in
- * light theme, black in dark theme, so the pill reads as a shaded scrim
- * rather than as more of the same tint already on the glyph and label.
+ * Selected-tab indicator colour for Nothing OS: signature Nothing Red (#D71921)
+ * accent for clean mechanical contrast.
  */
 @Composable
-fun glassIndicatorColor(): Color =
-    if (MaterialTheme.colorScheme.surface.luminance() > 0.5f) Color.White else Color.Black
+fun glassIndicatorColor(): Color = Color(0xFFD71921)
 
 /**
  * A lightweight visual match for liquid glass over a stable background.

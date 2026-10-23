@@ -56,7 +56,7 @@ export function AppShell() {
   } else if (extension.state === 'missing' && !bannerDismissed) {
     banner = (
       <Banner
-        title="Play YouTube Music with the BitChord extension."
+        title="Play YouTube Music with the extension."
         detail="Playback, YouTube Music sign-in, Spotify and Discord need the extension. Addons and lyrics work without it."
         action={
           <PrefetchLink className={bannerButtonClass} to="/extension">

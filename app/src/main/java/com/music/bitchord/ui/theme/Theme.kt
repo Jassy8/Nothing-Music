@@ -18,38 +18,40 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.music.bitchord.R
 
-// Apple Music's signature red. No longer the primary accent, but kept for the
-// spots (Replay's rank badge) that want that specific red regardless of theme.
-val AccentRed = Color(0xFFFA2D48)
+// Nothing OS signature red (#D71921) — the dot on the Nothing Phone, the mechanical glyph accent.
+val AccentRed = Color(0xFFD71921)
+val NothingRed = Color(0xFFD71921)
 
 private val DarkColors = darkColorScheme(
     primary = Color.White,
     onPrimary = Color.Black,
-    background = Color.Black,
-    onBackground = Color.White,
-    surface = Color(0xFF0D0D0F),
-    onSurface = Color.White,
-    surfaceVariant = Color(0xFF1C1C1E),
-    onSurfaceVariant = Color(0xFF8E8E93),
-    outline = Color(0xFF2C2C2E),
+    background = Color(0xFF000000),
+    onBackground = Color(0xFFE6E6E6),
+    surface = Color(0xFF000000),
+    onSurface = Color(0xFFE6E6E6),
+    surfaceVariant = Color(0xFF111111),
+    onSurfaceVariant = Color(0xFF888888),
+    outline = Color(0xFF222222),
+    error = Color(0xFFD71921),
+    onError = Color.White,
 )
 
 private val LightColors = lightColorScheme(
     primary = Color.Black,
     onPrimary = Color.White,
-    background = Color.White,
-    onBackground = Color.Black,
-    surface = Color(0xFFF7F7F9),
-    onSurface = Color.Black,
-    surfaceVariant = Color(0xFFF2F2F7),
-    onSurfaceVariant = Color(0xFF6E6E73),
-    outline = Color(0xFFE5E5EA),
+    background = Color(0xFF000000),
+    onBackground = Color.White,
+    surface = Color(0xFF000000),
+    onSurface = Color.White,
+    surfaceVariant = Color(0xFF111111),
+    onSurfaceVariant = Color(0xFF888888),
+    outline = Color(0xFF222222),
+    error = Color(0xFFD71921),
+    onError = Color.White,
 )
 
 /**
- * SF Pro Display, the face Apple Music itself is set in. Only the weights the
- * type scale actually asks for are bundled; Compose synthesises nothing, so a
- * missing weight would silently fall back to the nearest one shipped.
+ * SF Pro Display with geometric, industrial typography scale — Nothing OS aesthetic.
  */
 val SFProDisplay = FontFamily(
     Font(R.font.sf_pro_display_regular, FontWeight.W400),
@@ -59,17 +61,17 @@ val SFProDisplay = FontFamily(
     Font(R.font.sf_pro_display_heavy, FontWeight.W800),
 )
 
-// Heavy, tight typography — the backbone of the Apple Music look.
+// Geometric typography with Nothing OS tracking
 private val BitChordTypography = Typography(
-    displayLarge = TextStyle(fontWeight = FontWeight.W800, fontSize = 34.sp, letterSpacing = (-0.8).sp),
-    headlineLarge = TextStyle(fontWeight = FontWeight.W800, fontSize = 30.sp, letterSpacing = (-0.7).sp),
-    headlineMedium = TextStyle(fontWeight = FontWeight.W700, fontSize = 22.sp, letterSpacing = (-0.4).sp),
-    titleLarge = TextStyle(fontWeight = FontWeight.W700, fontSize = 20.sp, letterSpacing = (-0.3).sp),
-    titleMedium = TextStyle(fontWeight = FontWeight.W600, fontSize = 16.sp, letterSpacing = (-0.2).sp),
-    bodyLarge = TextStyle(fontWeight = FontWeight.W400, fontSize = 16.sp),
-    bodyMedium = TextStyle(fontWeight = FontWeight.W400, fontSize = 14.sp),
-    labelMedium = TextStyle(fontWeight = FontWeight.W600, fontSize = 12.sp),
-    labelSmall = TextStyle(fontWeight = FontWeight.W600, fontSize = 11.sp),
+    displayLarge = TextStyle(fontWeight = FontWeight.W700, fontSize = 32.sp, letterSpacing = 0.5.sp),
+    headlineLarge = TextStyle(fontWeight = FontWeight.W700, fontSize = 28.sp, letterSpacing = 0.4.sp),
+    headlineMedium = TextStyle(fontWeight = FontWeight.W600, fontSize = 22.sp, letterSpacing = 0.2.sp),
+    titleLarge = TextStyle(fontWeight = FontWeight.W600, fontSize = 20.sp, letterSpacing = 0.2.sp),
+    titleMedium = TextStyle(fontWeight = FontWeight.W500, fontSize = 16.sp, letterSpacing = 0.1.sp),
+    bodyLarge = TextStyle(fontWeight = FontWeight.W400, fontSize = 15.sp, letterSpacing = 0.1.sp),
+    bodyMedium = TextStyle(fontWeight = FontWeight.W400, fontSize = 13.sp, letterSpacing = 0.1.sp),
+    labelMedium = TextStyle(fontWeight = FontWeight.W600, fontSize = 12.sp, letterSpacing = 0.8.sp),
+    labelSmall = TextStyle(fontWeight = FontWeight.W600, fontSize = 10.sp, letterSpacing = 1.0.sp),
 ).withFamily(SFProDisplay)
 
 /** Applies [family] to every style in the scale, so nothing is left on Roboto. */

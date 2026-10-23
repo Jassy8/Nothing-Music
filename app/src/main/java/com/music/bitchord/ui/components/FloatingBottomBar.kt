@@ -157,8 +157,8 @@ fun FloatingBottomBar(
     hazeState: HazeState,
     modifier: Modifier = Modifier,
 ) {
-    val pillShape = RoundedCornerShape(percent = 50)
-    val container = MaterialTheme.colorScheme.surface
+    val pillShape = RoundedCornerShape(12.dp)
+    val container = MaterialTheme.colorScheme.surfaceVariant
     val reduceDynamicBlur by AppSettings.reduceDynamicBlur.collectAsStateWithLifecycle()
     val useGlass = LocalLiquidGlassEnabled.current && isGlassSupported()
     val reduceAnimation by AppSettings.reduceAnimation.collectAsStateWithLifecycle()

@@ -57,7 +57,7 @@ export function SearchField({ initial, onSearch }: { initial: string; onSearch: 
         <Search size={15} strokeWidth={2.4} className="pointer-events-none absolute left-2.5 text-secondary" aria-hidden="true" />
         <input
           ref={input}
-          className="h-[38px] w-full rounded-pill border border-search-border bg-page pt-1.5 pr-[30px] pb-[5px] pl-7 type-body text-primary placeholder:text-tertiary [&::-webkit-search-cancel-button]:hidden"
+          className="h-[38px] w-full rounded-[4px] border border-[#ffffff1a] bg-[#0d0d0d] pt-1.5 pr-[30px] pb-[5px] pl-7 type-body text-primary placeholder:text-tertiary focus:border-[#D71921] focus:outline-none focus:ring-1 focus:ring-[#D71921]/50 transition-colors [&::-webkit-search-cancel-button]:hidden"
           type="search"
           value={value}
           placeholder="Artists, Songs, Lyrics, and More"
@@ -90,7 +90,7 @@ export function SearchField({ initial, onSearch }: { initial: string; onSearch: 
         {value && (
           <button
             type="button"
-            className="absolute right-[9px] grid size-4 place-items-center rounded-full bg-tertiary text-page"
+            className="absolute right-[9px] grid size-4 place-items-center rounded-[2px] bg-tertiary text-page hover:bg-white transition-colors"
             aria-label="Clear"
             onClick={() => {
               setValue('');
@@ -102,10 +102,10 @@ export function SearchField({ initial, onSearch }: { initial: string; onSearch: 
         )}
       </form>
       {showList && (
-        // The dropdown: 302px of glass, 3px under the field.
+        // The dropdown: Nothing OS industrial panel with sharp border
         <ul
           id={listId}
-          className="absolute top-[calc(100%+3px)] left-0 z-(--z-contextual-menus) max-h-[min(700px,70vh)] w-[302px] overflow-y-auto rounded-[9px] border border-[#00000033] bg-thick-material py-1.5 shadow-[inset_0_0_0_1px_#ffffff33,0_8px_40px_#0000008c] [backdrop-filter:blur(60px)_saturate(2.2)]"
+          className="absolute top-[calc(100%+4px)] left-0 z-(--z-contextual-menus) max-h-[min(700px,70vh)] w-[302px] overflow-y-auto rounded-[4px] border border-[#ffffff18] bg-[#111111] py-1.5 shadow-[0_16px_40px_#000000e0]"
           role="listbox"
         >
           {options.map((option, i) => (

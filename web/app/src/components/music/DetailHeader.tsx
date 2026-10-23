@@ -21,11 +21,11 @@ interface DetailHeaderProps {
   motion?: AppleMotion | null;
 }
 
-/** Shuffle (circle) · Play (pill), report §14; also the Spotify playlist's Import button. */
+/** Nothing OS action buttons: sharp, mechanical, monochrome with red active/hover. */
 export const detailButton = {
-  pill: 'inline-flex h-9 min-w-[150px] items-center justify-center gap-1.5 rounded-[24px] bg-pill-bg px-3 type-title-3-emphasized text-pill disabled:opacity-40 enabled:hover:opacity-90',
+  pill: 'inline-flex h-9 min-w-[140px] items-center justify-center gap-2 rounded-full border border-white/20 bg-white px-4 type-title-3-emphasized uppercase tracking-[0.06em] text-[12px] text-black transition-all disabled:opacity-40 enabled:hover:bg-[#D71921] enabled:hover:border-[#D71921] enabled:hover:text-white',
   circle:
-    'grid size-9 place-items-center rounded-full border-[0.75px] border-quaternary bg-quinary text-primary disabled:opacity-40 enabled:hover:bg-quaternary',
+    'grid size-9 place-items-center rounded-full border border-white/20 bg-white/5 text-primary transition-all disabled:opacity-40 enabled:hover:border-[#D71921] enabled:hover:text-[#D71921] enabled:hover:bg-[#D7192110]',
 };
 
 /**
@@ -40,13 +40,7 @@ export function DetailHeader({ info, onPlay, onShuffle, canPlay, extra, motion }
   return (
     // Artwork beside the headings, description and actions; stacked and centred below 768px.
     <div className="mx-(--body-gutter) mb-10 grid grid-cols-[auto_minmax(0,1fr)] grid-rows-[auto_1fr_auto] gap-x-[34px] pt-11 [grid-template-areas:'artwork_headings'_'artwork_description'_'artwork_actions'] max-md:grid-cols-[1fr] max-md:grid-rows-[auto] max-md:justify-items-center max-md:pt-4 max-md:text-center max-md:[grid-template-areas:'artwork'_'headings'_'actions'_'description']">
-      <div className="relative w-[270px] self-start rounded-artwork-lg shadow-[0_10px_20px_0_var(--radiosityShadowColor)] [grid-area:artwork] max-lg:w-[220px] max-md:w-[min(270px,70vw)]">
-        {info.thumbnail && (
-          // A blurred copy behind the artwork: Apple's radiosity glow.
-          <div className="absolute inset-0 -z-1 scale-88 opacity-30 blur-[20px] saturate-200" aria-hidden="true">
-            <Artwork src={info.thumbnail} displayWidth={80} radius="var(--radius-artwork-large)" />
-          </div>
-        )}
+      <div className="relative w-[270px] self-start rounded-artwork-lg shadow-[0_16px_36px_0_#000000a0] [grid-area:artwork] max-lg:w-[220px] max-md:w-[min(270px,70vw)]">
         <Artwork src={info.thumbnail} displayWidth={270} radius="var(--radius-artwork-large)" eager />
         {/* Apple's motion artwork, over the cover once it's playing. */}
         {motion && (

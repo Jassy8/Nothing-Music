@@ -43,7 +43,7 @@ function Byline({ item }: { item: MusicItem }) {
 function PlayPlatter({ item }: { item: MusicItem }) {
   return (
     <button
-      className="pointer-events-auto absolute bottom-2.5 left-2.5 grid size-[30px] place-items-center rounded-full bg-thin-material text-white [backdrop-filter:saturate(180%)_blur(60px)] hover:bg-key-bg"
+      className="pointer-events-auto absolute bottom-2.5 left-2.5 grid size-[32px] place-items-center rounded-full border border-white/20 bg-black/90 text-white shadow-lg transition-all duration-150 hover:border-[#D71921] hover:bg-[#D71921] hover:scale-105"
       aria-label={`Play ${item.title}`}
       onClick={(e) => {
         e.preventDefault();

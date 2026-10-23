@@ -69,8 +69,8 @@ export function Menu({ anchor, placement = 'below-end', onClose, label, children
       <div className="fixed inset-0 z-[calc(var(--z-contextual-menus)-1)]" onPointerDown={onClose} aria-hidden="true" />
       <div
         ref={panel}
-        // Apple's amp-contextual-menu (report §8).
-        className="fixed z-(--z-contextual-menus) max-w-[300px] min-w-[185px] animate-menu-in overflow-y-auto rounded-[10px] bg-thick-material p-[5px] shadow-[0_0_0_0.5px_var(--vibrantDivider),0_10px_40px_var(--glassMaterialShadowColor)] [backdrop-filter:saturate(2.2)_blur(32px)]"
+        // Nothing OS contextual menu: flat, sharp, industrial.
+        className="fixed z-(--z-contextual-menus) max-w-[300px] min-w-[185px] animate-menu-in overflow-y-auto rounded-[4px] border border-[#ffffff18] bg-[#121212] p-1 shadow-[0_16px_40px_#000000f0]"
         style={position}
         role="menu"
         aria-label={label}
@@ -97,7 +97,7 @@ interface MenuItemProps {
 export function MenuItem({ onSelect, icon, checked, destructive, disabled, trailing, children }: MenuItemProps) {
   return (
     <button
-      className="flex min-h-7 w-full items-center gap-2 rounded-[5px] px-2 py-1 text-start type-body text-primary enabled:hover:bg-quinary focus-visible:bg-quinary disabled:text-tertiary data-destructive:text-destructive"
+      className="flex min-h-7 w-full items-center gap-2 rounded-[2px] px-2 py-1 text-start type-body text-primary enabled:hover:bg-[#ffffff10] enabled:hover:text-white focus-visible:bg-[#ffffff10] focus-visible:outline-none disabled:text-tertiary data-destructive:text-[#D71921] transition-colors"
       role={checked === undefined ? 'menuitem' : 'menuitemradio'}
       aria-checked={checked === undefined ? undefined : !!checked}
       data-destructive={destructive || undefined}
